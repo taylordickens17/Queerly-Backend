@@ -41,8 +41,7 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  let { firstName, lastName, password, sexuality, gender, pronouns } =
-    req.body.user;
+  let { firstName, lastName, password } = req.body.user;
 
   try {
     const loginUser = await UserModel.findOne({
@@ -78,5 +77,9 @@ router.post("/login", async (req, res) => {
         message: "Incorrect email or password",
       });
     }
-  } catch (err) {}
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to log user in",
+    });
+  }
 });
